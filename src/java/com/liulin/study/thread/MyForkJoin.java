@@ -13,13 +13,14 @@ public class MyForkJoin {
 	private static int size = 100000;
 
 	public static void main(String[] args) throws InterruptedException {
+		// =================初始化需要排序的数据==========================
 		int[] numarry = new int[size];
 		InitUtil.initArray(numarry);
-		
 		int[] clone = numarry.clone();
-
 		PrintUtil.print(clone, "排序前");
+		// =================初始化需要排序的数据==========================
 
+		// =================使用forkJoin实现排序方式==========================
 		MyForkJoin myForkJoin = new MyForkJoin();
 		long begin1 = System.currentTimeMillis();
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
@@ -27,22 +28,23 @@ public class MyForkJoin {
 		ArrayList<Integer> invoke = forkJoinPool.invoke(task);
 		task.join();
 		long end1 = System.currentTimeMillis();
-		
+		PrintUtil.print(invoke, "排序后2");
+		// =================使用forkJoin实现排序方式==========================
+
+		// =================使用普通冒泡排序实现排序方式==========================
 		long begin2 = System.currentTimeMillis();
 		SortUtil.bubbleSort(clone, 0, size);
 		long end2 = System.currentTimeMillis();
-
 		PrintUtil.print(clone, "排序后1");
+		// =================使用普通冒泡排序实现排序方式==========================
 
-		PrintUtil.print(invoke, "排序后2");
-
+		// =================两种排序执行使用时间及执行时间对比==========================
 		long forkJoinTime = PrintUtil.executionTime(begin1, end1, "forkJoin");
 		long normalTime = PrintUtil.executionTime(begin2, end2, "normal");
-
 		PrintUtil.timeContrast(forkJoinTime, "forkJoin", normalTime, "normal");
+		// =================两种排序执行使用时间及执行时间对比==========================
 	}
 
-	
 	/**
 	 * @author liulin_think
 	 * @date 2019-01-08 10:19:44
@@ -70,6 +72,7 @@ public class MyForkJoin {
 			int num = max - min;
 			ArrayList<Integer> arrayList = new ArrayList<>();
 			if (num > numarry.length / FA) {
+				// 任务比预定的阀值大.对任务进行分解
 				int middle = num / 2 + min;
 				MyForkJoinTask left = new MyForkJoinTask(numarry, min, middle);
 				MyForkJoinTask right = new MyForkJoinTask(numarry, middle, max);
@@ -77,6 +80,8 @@ public class MyForkJoin {
 
 				ArrayList<Integer> ljoin = left.join();
 				ArrayList<Integer> rjoin = right.join();
+
+				// =================排序完成后数据合并==========================
 				int l1 = 0;
 				int r1 = 0;
 				for (; l1 != ljoin.size() || r1 != rjoin.size();) {
@@ -93,7 +98,9 @@ public class MyForkJoin {
 						arrayList.add(rjoin.get(r1++));
 					}
 				}
+				// =================排序完成后数据合并==========================
 			} else {
+				// 分解到足够小的单元,执行具体的任务内容
 				SortUtil.bubbleSort(numarry, min, max);
 				for (int i = min; i < max; i++) {
 					arrayList.add(numarry[i]);
