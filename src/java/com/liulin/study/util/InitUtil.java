@@ -3,7 +3,7 @@ package com.liulin.study.util;
 import java.util.Random;
 
 /** 
- * Reason: TODO
+ * Reason: 初始化工具类
  * @author liulin_think
  * @date 2019-01-08 15:16:52
  */
