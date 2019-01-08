@@ -2,7 +2,8 @@ package com.liulin.study.thread;
 
 import java.util.concurrent.CountDownLatch;
 
-/** Reason: 是一组线程等待其他的线程完成工作以后在执行，加强版join
+/** 
+ * Reason: 是一组线程等待其他的线程完成工作以后在执行，加强版join
  * 			await用来等待，countDown负责计数器的减一
  * 			当countDown减到0时,await开始执行.
  * @author liulin_think
