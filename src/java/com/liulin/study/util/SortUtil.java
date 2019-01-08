@@ -14,7 +14,7 @@ public class SortUtil {
 	 * @author liulin_think
 	 * @date 2019-01-08 14:28:50
 	 */
-	public static void bubbleSort(Integer[] numarry, int min, int max) {
+	public static void bubbleSort(int[] numarry, int min, int max) {
 		for (int i = min; i < max; i++) {
 			for (int j = i + 1; j < max; j++) {
 				if (numarry[i] > numarry[j]) {
