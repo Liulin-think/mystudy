@@ -1,4 +1,4 @@
-package com.liulin.study.o1;
+package com.liulin.study.thread;
 
 import java.util.ArrayList;
 import java.util.Random;
